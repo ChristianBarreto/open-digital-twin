@@ -16,6 +16,8 @@ export default function Simulation() {
   const blocks = project.blocks;
   const arrows = [];
 
+  console.log(">>>> TEST")
+
   useEffect(() => {
     setRenderBlocks(blocks);
     setRenderArrows(composeArrows(blocks))

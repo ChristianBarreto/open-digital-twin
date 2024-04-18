@@ -1,0 +1,12 @@
+version: "2"
+services:
+  my-app:
+    build: 
+      context: ./services/ui
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./services/ui:/user/app
+
+    

@@ -1,0 +1,19 @@
+{
+  "name": "open-digital-twin",
+  "version": "1.0.0",
+  "description": "Now you can simulate reality easialy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChristianBarreto/open-digital-twin.git"
+  },
+  "author": "Christian Barreto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChristianBarreto/open-digital-twin/issues"
+  },
+  "homepage": "https://github.com/ChristianBarreto/open-digital-twin#readme"
+}

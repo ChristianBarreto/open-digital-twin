@@ -12,7 +12,6 @@ export const Block = ({
   block,
   editBlockById,
   deleteBlock,
-  draftArrow,
   drawArrow,
 }) => {
   const [showMenu, setShowMenu] = useState(false)
@@ -34,7 +33,6 @@ export const Block = ({
           id={block.id}
           left={block.left -6}
           top={block.top}
-          draftArrow={draftArrow}
           drawArrow={drawArrow}
         />
       )}
@@ -43,7 +41,6 @@ export const Block = ({
           id={block.id}
           left={block.left + 75}
           top={block.top}
-          draftArrow={draftArrow}
           drawArrow={drawArrow}
         />
       )}

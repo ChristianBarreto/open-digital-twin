@@ -11,12 +11,13 @@ import { SystemScreen } from './components/Simulation/SystemScreen';
 const system = new System();
 const reference = new Reference();
 
-// const getMessurements = (id: string) => document.getElementById(id)?.getBoundingClientRect();
-reference.create5050Screens();
+const getMessurements = (id: string) => document.getElementById(id)?.getBoundingClientRect();
+reference.createTwoScreens();
 
 system.newBlock();
 system.blocks[0].state.addInput()
 system.blocks[0].state.addOutput()
+
 
 
 export default function Home() {
@@ -36,12 +37,15 @@ export default function Home() {
     setRenderSystem(cloneStruct(system));
   };
 
+  useEffect(() => {
+    reference.resize5050Vertical(getMessurements("container") as Messurements);
+  }, [])
 
   return (
     <div style={{ height: '85vh' }}>
       <PageHeader />
       <SimulationHeader handleNewBlock={handleNewBlock} />
-      <div style={{ height: '100%', position: 'absolute'}}>
+      <div id="container" style={{ height: '100%', width: '100%', position: 'absolute'}}>
         <Simulation 
           // params of simulation?
         >

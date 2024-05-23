@@ -54,15 +54,40 @@ export interface ReferenceType {
 export class Reference {
   screens: Screen[] = [];
 
-  create5050Screens() {
+  createTwoScreens() {
+    this.screens = [];
     // console.log('>>>', m)
     // if (m === undefined) return
     // this.screens.push(new Screen('window1', 0, 0, m.width, (m.height-m.top)/2 ))
     // this.screens.push(new Screen('window2', 0, (m.height-m.top)/2, m.width, (m.height-m.top)/2))
     this.screens.push(new Screen('window1', 0, 0, 500, 500 ))
-    this.screens.push(new Screen('window1', 500, 0, 500, 500 ))
+    this.screens.push(new Screen('window1', 100, 100, 500, 500 ))
 
   }
+
+  resize5050Horizontal(m: Messurements) {
+    if (m === undefined) return;
+    this.screens[0].left = 0;
+    this.screens[0].top = 0;
+    this.screens[0].width = m.width;
+    this.screens[0].height = (m.height - m.top)/2;
+    this.screens[1].left = 0;
+    this.screens[1].top = (m.height - m.top)/2;
+    this.screens[1].width = m.width;
+    this.screens[1].height =  (m.height - m.top)/2;
+  };
+
+  resize5050Vertical(m: Messurements) {
+    if (m === undefined) return;
+    this.screens[0].left = 0;
+    this.screens[0].top = 0;
+    this.screens[0].width = m.width /2;
+    this.screens[0].height = (m.height - m.top);
+    this.screens[1].left = m.width /2;
+    this.screens[1].top = 0;
+    this.screens[1].width = m.width /2;
+    this.screens[1].height =  (m.height - m.top);
+  };
 
 
   screenX: number = 200;

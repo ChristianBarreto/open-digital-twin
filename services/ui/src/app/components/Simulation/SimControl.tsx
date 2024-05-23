@@ -17,7 +17,7 @@ export default function SimControl() {
         width: '400px',
         position: 'absolute',
         zIndex: '999',
-        top: '160px',
+        top: '10px',
         right: '10px'
       }}
     >

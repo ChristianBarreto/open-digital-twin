@@ -23,6 +23,10 @@ system.blocks[0].state.addOutput()
 export default function Home() {
   const cloneStruct = (struct: System) => Object.assign(Object.create(Object.getPrototypeOf(struct)), struct);
   const [renderSystem, setRenderSystem] = useState(system);
+  const [start, setStart] = useState(false);
+  const [clock, setClock] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const [sample, ] = useState(100);
 
   useEffect(() => {
     setRenderSystem(cloneStruct(system));
@@ -39,15 +43,28 @@ export default function Home() {
 
   useEffect(() => {
     reference.resize5050Vertical(getMessurements("container") as Messurements);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (start) {
+      setTimeout(() => {
+        setClock(clock + 1);
+        setTimer(clock / sample);
+        // calcResults();
+      }, 1000 / sample);
+    };
+  })
 
   return (
     <div style={{ height: '85vh' }}>
       <PageHeader />
       <SimulationHeader handleNewBlock={handleNewBlock} />
       <div id="container" style={{ height: '100%', width: '100%', position: 'absolute'}}>
-        <Simulation 
-          // params of simulation?
+        <Simulation
+          timer={timer}
+          setTimer={setTimer}
+          setClock={setClock}
+          setStart={setStart}
         >
           {reference.screens.map((screen) => (
             <SystemScreen

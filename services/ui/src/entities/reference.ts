@@ -56,12 +56,8 @@ export class Reference {
 
   createTwoScreens() {
     this.screens = [];
-    // console.log('>>>', m)
-    // if (m === undefined) return
-    // this.screens.push(new Screen('window1', 0, 0, m.width, (m.height-m.top)/2 ))
-    // this.screens.push(new Screen('window2', 0, (m.height-m.top)/2, m.width, (m.height-m.top)/2))
     this.screens.push(new Screen('window1', 0, 0, 500, 500 ))
-    this.screens.push(new Screen('window1', 100, 100, 500, 500 ))
+    this.screens.push(new Screen('window2', 100, 100, 500, 500 ))
 
   }
 

@@ -1,17 +1,16 @@
 import { Block } from '../Block';
+import { SystemType } from '@/entities/system';
 import { ScreenType, ReferenceType } from '../../../entities/reference';
 
 import PosReference from './PosReference';
  
 export function SystemScreen({
   screen,
-  reference,
   renderSystem,
   rerenderSystem
 }: {
   screen: ScreenType,
-  reference: ReferenceType,
-  renderSystem: () => void,
+  renderSystem: SystemType,
   rerenderSystem: () => void,
 }) {
 

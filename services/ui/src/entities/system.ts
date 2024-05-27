@@ -1,5 +1,13 @@
 import { Block } from './block';
 
+export interface SystemType {
+  id: number;
+  blocks: Block[];
+  createBlockId: () => number;
+  newBlock: () => void;
+  getBlocks: () => void;
+}
+
 export class System {
   id: number = 0;
   blocks: Block[] = [];

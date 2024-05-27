@@ -13,7 +13,6 @@ export const BlockMenu = ({
     event.preventDefault();
     const deltaX = event.clientX - screen.left - screen.screenRefX - 35;
     const deltaY = event.clientY - screen.top - screen.screenRefY - 127;
-    console.log(deltaY, deltaX)
     block.position.editBlockPosition(deltaY, deltaX);
     rerenderSystem();
   }

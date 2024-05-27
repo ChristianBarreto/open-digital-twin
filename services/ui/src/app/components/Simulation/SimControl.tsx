@@ -8,7 +8,7 @@ import SimIcon from "../Icons/SimIcon";
 import { SimCounter } from "./SimCounter";
  
 
-export default function SimControl() {
+export default function SimControl({timer, setTimer, setClock, setStart}) {
  
   return (
     <Navbar
@@ -24,8 +24,8 @@ export default function SimControl() {
       <div className="flex items-center justify-between text-blue-gray-900">
         <SimIcon />
         <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-          <SimCounter />
-          <SimControlButtons />
+          <SimCounter timer={timer} />
+          <SimControlButtons setTimer={setTimer} setClock={setClock} setStart={setStart} />
         </ul>
       </div>
     </Navbar>

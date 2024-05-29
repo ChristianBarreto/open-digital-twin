@@ -1,4 +1,4 @@
-import { BlockState } from "../state";
+import { BlockState } from "../BlockState";
 
 const state = new BlockState();
 

@@ -1,6 +1,6 @@
 import { Block } from '../Block';
-import { SystemType } from '@/entities/system';
-import { ScreenType, ReferenceType } from '../../../entities/reference';
+import { SystemType } from '@/entities/System';
+import { ScreenType, ReferenceType } from '../../../entities/Reference';
 
 import PosReference from './PosReference';
  

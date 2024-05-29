@@ -1,4 +1,4 @@
-import { Reference } from "../reference";
+import { Reference } from "../Reference";
 
 const reference = new Reference();
 

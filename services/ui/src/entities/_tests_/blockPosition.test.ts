@@ -1,18 +1,18 @@
-import { BlockPosition } from "../position";
+import { BlockPosition } from "../BlockPosition";
 
 const position = new BlockPosition(10, 20);
 
 describe('Block position', () => {
   
   it('Should create a position', () => {
-    expect(position.top).toEqual(10);
-    expect(position.left).toEqual(20);
+    expect(position.left).toEqual(10);
+    expect(position.top).toEqual(20);
   });
 
   it('Should edit the block position', () => {
-    position.editBlockPosition(20, 30)
-    expect(position.top).toEqual(20);
-    expect(position.left).toEqual(30);
+    position.editBlockPosition(20, 30);
+    expect(position.left).toEqual(20);
+    expect(position.top).toEqual(30);
   });
 
   it('Should resize horizontal', () => {

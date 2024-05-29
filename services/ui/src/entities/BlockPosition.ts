@@ -5,14 +5,14 @@ export class BlockPosition {
   vSize: number;
   hSize: number;
 
-  constructor(top: number, left: number) { // Instead of receiving it, automatically place the blocks.
+  constructor(left: number, top: number) { // Instead of receiving it, automatically place the blocks.
     this.top = top;
     this.left = left;
     this.vSize = 70;
     this.hSize = 70;
   };
 
-  editBlockPosition(top: number, left: number) {
+  editBlockPosition(left: number, top: number) {
     this.top = top;
     this.left = left;
   };
@@ -25,7 +25,7 @@ export class BlockPosition {
     this.hSize = hSize;
   };
 
-  editBlockVHSize(vSize: number, hSize: number) {
+  editBlockVHSize(hSize: number, vSize: number) {
     this.vSize = vSize;
     this.hSize = hSize;
   };

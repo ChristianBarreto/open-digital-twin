@@ -46,7 +46,7 @@ export const Block = ({
             cursor: 'auto',
           }}
         >
-          <p>Empty block</p>
+          <p>{block.data.type}</p>
           {/* {(block.type == 'empty') && <Empty key={id} timer={timer} block={block} />}
           {(block.type == 'step') && <Step key={id} timer={timer} block={block} />}
           {(block.type == 'indicator') && <Indicator key={block.id} block={block} />} */}

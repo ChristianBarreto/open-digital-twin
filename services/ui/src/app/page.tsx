@@ -1,13 +1,14 @@
 'use client';
 import './globals.css';
-import { System } from '../entities/system';
-import { Reference, Messurements } from '@/entities/reference';
+import { System } from '../entities/System';
+import { Reference, Messurements } from '@/entities/Reference';
 import { useEffect, useState } from "react";
 import PageHeader from './components/PageHeader';
 import SimulationHeader from './components/SimulatorHeader';
 import SimControl from './components/Simulation/SimControl';
 import { Simulation } from './components/Simulation/Simulation';
 import { SystemScreen } from './components/Simulation/SystemScreen';
+import { Block } from '@/entities/Block';
 const system = new System();
 const reference = new Reference();
 
@@ -15,8 +16,12 @@ const getMessurements = (id: string) => document.getElementById(id)?.getBounding
 reference.createTwoScreens();
 
 system.newBlock();
-system.blocks[0].state.addInput()
-system.blocks[0].state.addOutput()
+system.changeBlockTypeToStep(0);
+system.blocks[0].position.editBlockPosition(10, 100);
+
+system.newBlock();
+system.changeBlockTypeToIndicator(1);
+system.blocks[1].position.editBlockPosition(200, 200);
 
 
 
@@ -53,7 +58,25 @@ export default function Home() {
         // calcResults();
       }, 1000 / sample);
     };
-  })
+  });
+
+  const func = {
+    "step": function (block: Block, _: number) {
+      const output = timer >= block.stepTime ? block.gain : block.initialValue;
+      system.setBlockOutput(block.id, 0, output);
+    },
+    "indicator": function (block: Block, index: number) {
+      // const inputValue =  
+      block.inputId && system.setBlockOutput(block.id, 0, inputValue);
+    },
+  }
+
+  const calcResults = () => {
+    system.blocks.forEach(block, index => {
+      func[block.type] && func[block.type](block, index);
+    })
+    rerenderSystem();
+  };
 
   return (
     <div style={{ height: '85vh' }}>

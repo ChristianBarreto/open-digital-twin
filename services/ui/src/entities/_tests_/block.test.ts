@@ -1,4 +1,4 @@
-import { Block } from "../block";
+import { Block } from "../Block";
 
 const block = new Block(1);
 

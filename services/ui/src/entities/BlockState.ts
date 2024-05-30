@@ -1,12 +1,32 @@
 type BlockSide =  1 | 2 | 3 | 4;
 type IOType = 'input' | 'output';
+type InputReference = {
+  inputBlockId: number;
+  inputOutputId: number;
+}
 
-class IO {
+class Input {
+  position: number = 0;
+  side: BlockSide;
+  reference: number = 0;
+  type: IOType;
+  rotation: number = 0;
+  id: number = 0;
+
+  constructor(type: IOType) {
+    this.type = type;
+    type === 'input' ? this.side = 3 : this.side = 1;
+  };
+
+};
+
+class Output {
   position: number = 0;
   side: BlockSide;
   value: number = 0;
   type: IOType;
   rotation: number = 0;
+  id: number = 0;
 
   constructor(type: IOType) {
     this.type = type;
@@ -16,8 +36,8 @@ class IO {
 };
 
 export class BlockState {
-  inputs: IO[] = [];
-  outputs: IO[] = [];
+  inputs: Input[] = [];
+  outputs: Output[] = [];
 
   organizeIos() {
     if (this.inputs.length){

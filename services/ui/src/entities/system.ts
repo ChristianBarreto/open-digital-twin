@@ -20,18 +20,34 @@ export class System {
     this.blocks.push(new Block(this.createBlockId()));
   };
 
-  getBlocks() {
+  logBlocks() {
     console.log(this.blocks);
   };
 
-  setBlockOutput(blockId: number, outputId: number,  value: number) {
-    const index = this.blocks.findIndex((b) => b.id === blockId);
-    this.blocks[index].state.outputs[outputId].value = value;
+  findBlockIndexById(blockId: number): number {
+    return this.blocks.findIndex((b) => b.id === blockId);
   };
 
-  getInputValue(currentBlockId: number, inputIndex: number): number {
-    const currentBlockIndex = this.blocks.findIndex((b) => b.id === currentBlockId);
-    return this.blocks[inputBlockIndex].state.outputs[inputIndex].value;
+  findBlockById(blockId: number): Block | undefined {
+    return this.blocks.find((b) => b.id === blockId);
+  };
+  
+  setBlockOutput(blockId: number, outputIndex: number,  value: number) {
+    const blockIndex = this.findBlockIndexById(blockId);
+    this.blocks[blockIndex].state.outputs[outputIndex].value = value;
+  };
+
+  setBlockInput(currentBlockId: number, inputIndex: number, outputBlockIndex: number) {
+    const inputBlockIndex = this.findBlockIndexById(currentBlockId);
+    this.blocks[inputBlockIndex].state.inputs[inputIndex].value = outputBlockIndex;
+    // TODO: After setting input, link blocks with arrows;
+  };
+
+  getInputValue(currentBlockId: number, inputIndex: number): number | undefined {
+    const currentBlock = this.findBlockById(currentBlockId);
+    const currentBlockInputIndex = currentBlock?.state.inputs[inputIndex].value;
+    const inputBlockIndex = currentBlockInputIndex ? this.findBlockIndexById(currentBlockInputIndex) : undefined;
+    return inputBlockIndex ? this.blocks[inputBlockIndex]?.state.outputs[inputIndex].value : undefined;
   };
 
   changeBlockTypeToEmpty(id: number) {

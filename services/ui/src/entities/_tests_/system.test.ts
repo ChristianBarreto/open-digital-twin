@@ -28,12 +28,17 @@ describe('Block data', () => {
 
   it('Should set block output', () => {
     system.setBlockOutput(0, 0, 3)
-    expect(system.blocks[0].state.outputs[0]).toEqual(3);
+    expect(system.blocks[0].state.outputs[0].value).toEqual(3);
+  });
+
+  it('Should set input (link two blocks)', () => {
+    system.setBlockInput(1, 0, 0)
+    expect(system.blocks[1].state.inputs[0].value).toEqual(0);
   });
 
   it('Should get input value', () => {
-    system.setBlockOutput(1, 0, 3)
-    expect(system.blocks[1].state.inputs[0]).toEqual(3);
+    system.getInputValue(1, 0)
+    expect(system.blocks[1].state.inputs[0].value).toEqual(3);
   });
 
 });

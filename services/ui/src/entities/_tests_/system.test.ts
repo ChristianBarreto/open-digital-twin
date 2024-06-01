@@ -31,14 +31,25 @@ describe('Block data', () => {
     expect(system.blocks[0].state.outputs[0].value).toEqual(3);
   });
 
+  it('Should findBlockIndexById()', () => {
+    expect(system.findBlockIndexById(0)).toEqual(0);
+    expect(system.findBlockIndexById(1)).toEqual(1);
+  });  //should return undefined if not exist
+
+  it('Should findBlockInputIndexByIds()', () => {
+    expect(system.findBlockInputIndexByIds(0, 0)).toBeUndefined;
+    expect(system.findBlockInputIndexByIds(1, 0)).toEqual(0);
+  });  //should return undefined if not exist
+
   it('Should set input (link two blocks)', () => {
-    system.setBlockInput(1, 0, 0)
-    expect(system.blocks[1].state.inputs[0].value).toEqual(0);
-  });
+    expect(system.blocks[1].state.inputs[0].reference).toEqual({outputBlockId: undefined, outputId: undefined});
+    system.setBlockInput(1, 0, 0, 0)
+    console.log(system.blocks[1].state.inputs[0].reference)
+    expect(system.blocks[1].state.inputs[0].reference).toEqual({outputBlockId: 0, outputId: 0});
+  });  //should return undefined if not exist
 
   it('Should get input value', () => {
-    system.getInputValue(1, 0)
-    expect(system.blocks[1].state.inputs[0].value).toEqual(3);
-  });
+    expect(system.getInputValue(1, 0)).toEqual(3);
+  });  //should return undefined if not exist
 
 });

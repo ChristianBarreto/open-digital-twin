@@ -1,36 +1,38 @@
 type BlockSide =  1 | 2 | 3 | 4;
-type IOType = 'input' | 'output';
+type InputTypeType = 'input';
+type OutputTypeType = 'output';
 type InputReference = {
-  inputBlockId: number;
-  inputOutputId: number;
+  outputBlockId: number | undefined;
+  outputId: number | undefined;
 }
 
 class Input {
   position: number = 0;
-  side: BlockSide;
-  reference: number = 0;
-  type: IOType;
+  side: BlockSide = 3;
+  type: InputTypeType = 'input';
   rotation: number = 0;
-  id: number = 0;
+  id: number;
+  reference: InputReference = {
+    outputBlockId: undefined,
+    outputId: undefined
+  };
 
-  constructor(type: IOType) {
-    this.type = type;
-    type === 'input' ? this.side = 3 : this.side = 1;
+  constructor(id: number) {
+    this.id = id;
   };
 
 };
 
 class Output {
   position: number = 0;
-  side: BlockSide;
-  value: number = 0;
-  type: IOType;
+  side: BlockSide = 1;
+  type: OutputTypeType = 'output';
   rotation: number = 0;
   id: number = 0;
+  value: number = 0;
 
-  constructor(type: IOType) {
-    this.type = type;
-    type === 'input' ? this.side = 3 : this.side = 1;
+  constructor(id: number) {
+    this.id = id;
   };
 
 };
@@ -52,13 +54,21 @@ export class BlockState {
     }
   };
 
+  createInputId(): number {
+    return this.inputs.length ? Math.max(...this.inputs.map((input) => input.id)) +1 : 0;
+  };
+
+  createOutputId(): number {
+    return this.outputs.length ? Math.max(...this.outputs.map((output) => output.id)) +1 : 0;
+  };
+
   addInput(){
-    this.inputs.push(new IO('input'));
+    this.inputs.push(new Input(this.createInputId()));
     this.organizeIos();
   };
 
   addOutput(){
-    this.outputs.push(new IO('output'));
+    this.outputs.push(new Output(this.createOutputId()));
     this.organizeIos();
   };
 
@@ -71,5 +81,10 @@ export class BlockState {
   deleteAllIos() {
     this.inputs = [];
     this.outputs = [];
+  };
+
+  outputValueById(outputId: number): number {
+    const outputIndex = this.outputs.findIndex((o) => o.id === outputId)
+    return this.outputs[outputIndex].value;
   }
 };

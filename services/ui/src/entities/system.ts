@@ -28,6 +28,11 @@ export class System {
     return this.blocks.findIndex((b) => b.id === blockId);
   };
 
+  findBlockInputIndexByIds(blockId: number, inputId: number): number | undefined {
+    const block = this.blocks.find((b) => b.id === blockId);
+    return block?.state.inputs.findIndex((i) => i.id === inputId);
+  };
+
   findBlockById(blockId: number): Block | undefined {
     return this.blocks.find((b) => b.id === blockId);
   };
@@ -37,17 +42,33 @@ export class System {
     this.blocks[blockIndex].state.outputs[outputIndex].value = value;
   };
 
-  setBlockInput(currentBlockId: number, inputIndex: number, outputBlockIndex: number) {
-    const inputBlockIndex = this.findBlockIndexById(currentBlockId);
-    this.blocks[inputBlockIndex].state.inputs[inputIndex].value = outputBlockIndex;
+  setBlockInput(currentBlockId: number, inputId: number, outputBlockId: number, outputId: number) {
+    const currentBlockIndex = this.findBlockIndexById(currentBlockId);
+    const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
+    console.log("VALUE: ", currentBlockInputIndex)
+    if(currentBlockInputIndex !== undefined) {
+      console.log("ENTROU")
+      this.blocks[currentBlockIndex].state
+        .inputs[currentBlockInputIndex].reference = {outputBlockId: outputBlockId, outputId: outputId};
+    }
+    console.log("SAIU")
+
     // TODO: After setting input, link blocks with arrows;
   };
 
-  getInputValue(currentBlockId: number, inputIndex: number): number | undefined {
+  getInputValue(currentBlockId: number, inputId: number): number | undefined {
     const currentBlock = this.findBlockById(currentBlockId);
-    const currentBlockInputIndex = currentBlock?.state.inputs[inputIndex].value;
-    const inputBlockIndex = currentBlockInputIndex ? this.findBlockIndexById(currentBlockInputIndex) : undefined;
-    return inputBlockIndex ? this.blocks[inputBlockIndex]?.state.outputs[inputIndex].value : undefined;
+    const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
+    let outputBlockIndex = undefined;
+    if (currentBlockInputIndex !== undefined) {
+      outputBlockIndex = currentBlock?.state.inputs[currentBlockInputIndex].reference.outputBlockId;
+    };
+
+    if (outputBlockIndex !== undefined) {
+      return this.blocks[outputBlockIndex]?.state.outputValueById(outputBlockIndex);
+    };
+
+    return undefined;
   };
 
   changeBlockTypeToEmpty(id: number) {

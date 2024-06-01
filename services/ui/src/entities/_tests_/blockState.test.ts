@@ -10,9 +10,10 @@ describe('Block state', () => {
     expect(state.inputs).toHaveLength(1);
     expect(state.inputs[0].side).toEqual(3);
     expect(state.inputs[0].type).toEqual('input');
-    expect(state.inputs[0].value).toEqual(0);
+    expect(state.inputs[0].reference).toEqual({outputBlockId: undefined, outputId: undefined});
     expect(state.inputs[0].rotation).toEqual(0);
     expect(state.inputs[0].position).toEqual(1/2);
+    expect(state.inputs[0].id).toEqual(0);
     //add other properties of input
   });
 
@@ -25,6 +26,7 @@ describe('Block state', () => {
     expect(state.outputs[0].value).toEqual(0);
     expect(state.outputs[0].rotation).toEqual(0);
     expect(state.outputs[0].position).toEqual(1/2);
+    expect(state.outputs[0].id).toEqual(0);
     //add other properties of output
   });
   
@@ -32,31 +34,35 @@ describe('Block state', () => {
     state.addInput();
     expect(state.inputs).toHaveLength(2);
     expect(state.inputs[0].position).toEqual(1/3);
+    expect(state.inputs[1].id).toEqual(1);
     expect(state.inputs[1].position).toEqual((1/3) * 2);
     state.addInput();
     expect(state.inputs).toHaveLength(3);
     expect(state.inputs[0].position).toEqual(1/4);
     expect(state.inputs[1].position).toEqual((1/4) * 2);
+    expect(state.inputs[2].id).toEqual(2);
     expect(state.inputs[2].position).toEqual((1/4) * 3);
     
     state.addOutput();
     expect(state.outputs).toHaveLength(2);
     expect(state.outputs[0].position).toEqual(1/3);
+    expect(state.outputs[1].id).toEqual(1);
     expect(state.outputs[1].position).toEqual((1/3) * 2);
     state.addOutput();
     expect(state.outputs).toHaveLength(3);
     expect(state.outputs[0].position).toEqual(1/4);
     expect(state.outputs[1].position).toEqual((1/4) * 2);
+    expect(state.outputs[2].id).toEqual(2);
     expect(state.outputs[2].position).toEqual((1/4) * 3);
   });
   
   it('Should change and verify input states', () => {
-    state.inputs[0].value = 1;
-    expect(state.inputs[0].value).toEqual(1);
-    state.inputs[1].value = 2;
-    expect(state.inputs[1].value).toEqual(2);
-    state.inputs[2].value = 3;
-    expect(state.inputs[2].value).toEqual(3);
+    state.inputs[0].reference = {outputBlockId: 0, outputId: 0};
+    expect(state.inputs[0].reference).toEqual({outputBlockId: 0, outputId: 0});
+    state.inputs[1].reference = {outputBlockId: 1, outputId: 1};
+    expect(state.inputs[1].reference).toEqual({outputBlockId: 1, outputId: 1});
+    state.inputs[2].reference = {outputBlockId: 2, outputId: 2};
+    expect(state.inputs[2].reference).toEqual({outputBlockId: 2, outputId: 2});
   });
 
   it('Should change and verify output states', () => {

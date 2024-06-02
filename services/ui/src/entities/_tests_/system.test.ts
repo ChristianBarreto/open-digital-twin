@@ -44,7 +44,6 @@ describe('Block data', () => {
   it('Should set input (link two blocks)', () => {
     expect(system.blocks[1].state.inputs[0].reference).toEqual({outputBlockId: undefined, outputId: undefined});
     system.setBlockInput(1, 0, 0, 0)
-    console.log(system.blocks[1].state.inputs[0].reference)
     expect(system.blocks[1].state.inputs[0].reference).toEqual({outputBlockId: 0, outputId: 0});
   });  //should return undefined if not exist
 

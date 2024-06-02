@@ -23,6 +23,7 @@ system.newBlock();
 system.changeBlockTypeToIndicator(1);
 system.blocks[1].position.editBlockPosition(200, 200);
 
+system.setBlockInput(1, 0, 0, 0)
 
 
 export default function Home() {
@@ -55,25 +56,25 @@ export default function Home() {
       setTimeout(() => {
         setClock(clock + 1);
         setTimer(clock / sample);
-        // calcResults();
+        calcResults();
       }, 1000 / sample);
     };
   });
 
   const func = {
     "step": function (block: Block, _: number) {
-      const output = timer >= block.stepTime ? block.gain : block.initialValue;
+      const output = timer >= block.data.stepTime ? block.data.gain : block.data.initialValue;
       system.setBlockOutput(block.id, 0, output);
     },
-    "indicator": function (block: Block, index: number) {
-      // const inputValue =  
-      block.inputId && system.setBlockOutput(block.id, 0, inputValue);
+    "indicator": function (block: Block, _: number) {
+      const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);     
+      system.setBlockOutput(inputValue, 0, inputValue);
     },
-  }
+  };
 
   const calcResults = () => {
-    system.blocks.forEach(block, index => {
-      func[block.type] && func[block.type](block, index);
+    system.blocks.forEach((block, index) => {
+      func[block.data.type] && func[block.data.type](block, index);
     })
     rerenderSystem();
   };

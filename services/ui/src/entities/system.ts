@@ -45,13 +45,10 @@ export class System {
   setBlockInput(currentBlockId: number, inputId: number, outputBlockId: number, outputId: number) {
     const currentBlockIndex = this.findBlockIndexById(currentBlockId);
     const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
-    console.log("VALUE: ", currentBlockInputIndex)
     if(currentBlockInputIndex !== undefined) {
-      console.log("ENTROU")
       this.blocks[currentBlockIndex].state
         .inputs[currentBlockInputIndex].reference = {outputBlockId: outputBlockId, outputId: outputId};
     }
-    console.log("SAIU")
 
     // TODO: After setting input, link blocks with arrows;
   };
@@ -63,11 +60,10 @@ export class System {
     if (currentBlockInputIndex !== undefined) {
       outputBlockIndex = currentBlock?.state.inputs[currentBlockInputIndex].reference.outputBlockId;
     };
-
     if (outputBlockIndex !== undefined) {
       return this.blocks[outputBlockIndex]?.state.outputValueById(outputBlockIndex);
     };
-
+    
     return undefined;
   };
 
@@ -82,6 +78,7 @@ export class System {
     this.blocks[blockIndex].data.changeTypeToIndicator();
     this.blocks[blockIndex].state.deleteAllIos();
     this.blocks[blockIndex].state.addInput();
+    this.blocks[blockIndex].state.addOutput();
   };
 
   changeBlockTypeToStep(id: number) {

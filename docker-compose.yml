@@ -1,6 +1,6 @@
 version: "2"
 services:
-  my-app:
+  ui:
     build: 
       context: ./services/ui
       dockerfile: Dockerfile

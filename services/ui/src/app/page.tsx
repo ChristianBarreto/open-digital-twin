@@ -1,4 +1,4 @@
-'use client';
+'use client'; // define that Next.js is using client components.
 import './globals.css';
 import { System } from '../entities/System';
 import { Reference, Messurements } from '@/entities/Reference';

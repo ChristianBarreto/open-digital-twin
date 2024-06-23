@@ -1,3 +1,5 @@
+import { Arrow } from "./Arrows";
+
 type BlockSide =  1 | 2 | 3 | 4;
 type InputTypeType = 'input';
 type OutputTypeType = 'output';
@@ -16,6 +18,7 @@ class Input {
     outputBlockId: undefined,
     outputId: undefined
   };
+  arrow?: Arrow = undefined;
 
   constructor(id: number) {
     this.id = id;

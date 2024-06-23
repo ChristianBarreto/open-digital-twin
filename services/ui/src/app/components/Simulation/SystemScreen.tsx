@@ -37,9 +37,12 @@ export function SystemScreen({
     removeEventListener('mousemove', dragScreen, false);
     removeEventListener('mouseup', myOnMouseUp, false);
   }
+  
+
 
   return (
     <div>
+      <canvas id="canvas" width="150" height="150"></canvas>
       <div
         id={screen.id}
         className="border rounded-none bg-slate-50"

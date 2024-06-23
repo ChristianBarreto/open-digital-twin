@@ -2,6 +2,9 @@ import { useState } from "react";
 import { BlockMenu } from "./BlockMenu";
 import { BlockInput } from "./BlockInput";
 import { BlockOutput } from "./BlockOutput";
+import { Line } from "../Arrow/Line";
+import { Arrow, Line as LineC } from "@/entities/Arrows";
+
 
 export const Block = ({
   block,
@@ -10,11 +13,11 @@ export const Block = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false)
 
-
   return (
     <>
       {showMenu  && (
         <BlockMenu
+          key={`menu-${block.id}`}
           block={block}
           setShowMenu={setShowMenu}
           rerenderSystem={rerenderSystem}
@@ -22,16 +25,23 @@ export const Block = ({
         />)
       }
       {block.state.inputs.map((input) => (
-        <BlockInput key={block.id} blockPosition={block.position} screen={screen} input={input} />
+        <>
+          <BlockInput key={`input${block.id}`} blockPosition={block.position} screen={screen} input={input} />
+          {input.arrow.lines.map((line, index) => (
+            <Line key={index} screen={screen} coord={line} />
+          ))}
+          
+        </>
       ))}
       {block.state.outputs.map((output) => (
-        <BlockOutput  key={block.id} blockPosition={block.position} screen={screen} output={output} />
+        <BlockOutput  key={`output-${block.id}`} blockPosition={block.position} screen={screen} output={output} />
       ))}
       <div
         onMouseOver={() => setShowMenu(true)}
         onMouseOut={() => setShowMenu(false)}
       >
-        <div 
+        <div
+          key={`block-${block.id}`}
           style={{
             border: "1px solid gray",
             borderRadius: "5px",

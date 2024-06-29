@@ -5,7 +5,6 @@ import { Reference, Messurements } from '@/entities/Reference';
 import { useEffect, useState } from "react";
 import PageHeader from './components/PageHeader';
 import SimulationHeader from './components/SimulatorHeader';
-import SimControl from './components/Simulation/SimControl';
 import { Simulation } from './components/Simulation/Simulation';
 import { SystemScreen } from './components/Simulation/SystemScreen';
 import { Block } from '@/entities/Block';
@@ -26,7 +25,8 @@ system.changeBlockTypeToIndicator(1);
 system.blocks[1].state.addInput();
 system.blocks[1].position.editBlockPosition(200, 200);
 
-// system.setBlockInput(1, 0, 0, 0)
+system.setBlockInput(1, 0, 0, 0);
+system.setBlockInput(1, 1, 0, 1);
 
 
 export default function Home() {
@@ -37,9 +37,6 @@ export default function Home() {
   const [timer, setTimer] = useState(0);
   const [sample, ] = useState(100);
 
-  system.setBlockInput(1, 1, 0, 0);
-  // TODO: when testing (1, 1, 0, 1) an error happens.
-  // TODO: when testing (1, 1, 0, 0) the arrow location is not good
 
   useEffect(() => {
     setRenderSystem(cloneStruct(system));
@@ -100,8 +97,8 @@ export default function Home() {
           {reference.screens.map((screen) => (
             <SystemScreen
               key={`system-screen-${screen.id}`}
+              system={system}
               screen={screen}
-              renderSystem={renderSystem}
               rerenderSystem={rerenderSystem}
             />
           ))}

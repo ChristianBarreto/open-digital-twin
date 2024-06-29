@@ -48,28 +48,102 @@ export class System {
     this.blocks[blockIndex].state.outputs[outputIndex].value = value;
   };
 
+  defineArrowPosition(currentBlockId: number, inputId: number, outputBlockId: number, outputId: number) {
+    const currentBlockIndex = this.findBlockIndexById(currentBlockId);
+    const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
+    const outputBlockIndex = this.findBlockIndexById(outputBlockId);
+    const outputBlockInputIndex = this.findBlockOutputIndexByIds(outputBlockId, outputId);
+
+    if (
+      (currentBlockIndex !== undefined) &&
+      (currentBlockInputIndex !== undefined) &&
+      (outputBlockIndex !== undefined) &&
+      (outputBlockInputIndex !== undefined)
+    ) {
+      
+      const side1 = this.blocks[outputBlockIndex].state.outputs[outputBlockInputIndex].side;
+
+      const x1 = (this.blocks[outputBlockIndex].position.left
+        + this.blocks[outputBlockIndex].position.hSize);
+
+      const y1 = (this.blocks[outputBlockIndex].position.top 
+        + (this.blocks[outputBlockIndex].position.hSize * this.blocks[outputBlockIndex].state.outputs[outputBlockInputIndex].position));
+
+      const side2 = this.blocks[currentBlockIndex].state.inputs[currentBlockInputIndex].side;
+
+      const x2 = (this.blocks[currentBlockIndex].position.left);
+
+      const y2 = (this.blocks[currentBlockIndex].position.top
+        + (this.blocks[currentBlockIndex].position.hSize * this.blocks[currentBlockIndex].state.inputs[currentBlockInputIndex].position));
+
+
+      return [side1, x1, y1, side2, x2, y2]
+
+  } else {
+      console.error(`Error defining arrow.
+        > Block id ${currentBlockId} input id ${inputId} with block id ${outputBlockId} output id ${outputId}`)
+    }
+  }
+
   setBlockInput(currentBlockId: number, inputId: number, outputBlockId: number, outputId: number) {
     const currentBlockIndex = this.findBlockIndexById(currentBlockId);
     const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
     const outputBlockIndex = this.findBlockIndexById(outputBlockId);
     const outputBlockInputIndex = this.findBlockOutputIndexByIds(outputBlockId, outputId);
 
+    if (
+      (currentBlockIndex !== undefined) &&
+      (currentBlockInputIndex !== undefined) &&
+      (outputBlockIndex !== undefined) &&
+      (outputBlockInputIndex !== undefined)
+    ) {
 
-    if(currentBlockInputIndex && outputBlockInputIndex !== undefined) {
       this.blocks[currentBlockIndex].state
         .inputs[currentBlockInputIndex].reference = {outputBlockId: outputBlockId, outputId: outputId};
-
-
-      const x1 = this.blocks[outputBlockIndex].position.left + this.blocks[outputBlockIndex].position.hSize;
-      const y1 = this.blocks[outputBlockIndex].position.top + (this.blocks[outputBlockIndex].position.hSize * this.blocks[outputBlockIndex].state.outputs[outputBlockInputIndex].position);
-      const x2 = this.blocks[currentBlockIndex].position.left;
-      const y2 = this.blocks[currentBlockIndex].position.top + this.blocks[currentBlockIndex].position.hSize * this.blocks[currentBlockInputIndex].state.outputs[outputBlockInputIndex].position;
-      // TODO: can be improved
       
+      this.blocks[outputBlockIndex].state
+        .outputs[outputBlockInputIndex].reference = {inputBlockId: currentBlockId, inputId: inputId};
+
+
+      const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(currentBlockId, inputId, outputBlockId, outputId);
+           
       this.blocks[currentBlockIndex].state
-        .inputs[currentBlockInputIndex].arrow = new Arrow(1, x1, y1, 3, x2, y2);
+        .inputs[currentBlockInputIndex].arrow = new Arrow(side1, x1, y1, side2, x2, y2);
+
+    } else {
+      console.error(`Was not possible to assing this input to an output.
+        > Block id ${currentBlockId} input id ${inputId} with block id ${outputBlockId} output id ${outputId}`)
     }
   };
+
+  updateBlockArrows(currentBlockId: number) {
+
+    const currentBlockIndex = this.findBlockIndexById(currentBlockId);
+
+    this.blocks[currentBlockIndex].state.inputs.forEach((input) => {
+      if (!input.arrow) return
+     
+      const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, input.id);
+  
+      const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(currentBlockId, input.id, input.reference.outputBlockId, input.reference.outputId);
+
+      this.blocks[currentBlockIndex].state
+        .inputs[currentBlockInputIndex].arrow = new Arrow(side1, x1, y1, side2, x2, y2);
+    })
+
+    this.blocks[currentBlockIndex].state.outputs.forEach((output) => {
+      if (!output.reference.inputBlockId) return
+
+      const outputBlockIndex = this.findBlockIndexById(output.reference.inputBlockId);
+      const currentBlockOutputIndex = this.findBlockInputIndexByIds(output.reference.inputBlockId, output.reference.inputId);
+  
+      const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(output.reference.inputBlockId, output.reference.inputId, currentBlockId, output.id);
+
+      this.blocks[outputBlockIndex].state
+        .inputs[currentBlockOutputIndex].arrow = new Arrow(side1, x1, y1, side2, x2, y2);
+    })
+
+  }
 
   getInputValue(currentBlockId: number, inputId: number): number | undefined {
     const currentBlock = this.findBlockById(currentBlockId);

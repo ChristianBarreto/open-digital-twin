@@ -7,6 +7,10 @@ type InputReference = {
   outputBlockId: number | undefined;
   outputId: number | undefined;
 }
+type OutputReference = {
+  inputBlockId: number | undefined;
+  inputId: number | undefined;
+}
 
 class Input {
   position: number = 0;
@@ -24,10 +28,6 @@ class Input {
     this.id = id;
   };
 
-  connectThisInputToOutput(outputBlockId: number, outputId: number) {
-    
-  }
-
 };
 
 class Output {
@@ -37,6 +37,10 @@ class Output {
   rotation: number = 0;
   id: number = 0;
   value: number = 0;
+  reference: OutputReference = {
+    inputBlockId: undefined,
+    inputId: undefined
+  };
 
   constructor(id: number) {
     this.id = id;

@@ -1,16 +1,16 @@
 import { Block } from '../Block';
 import { SystemType } from '@/entities/System';
-import { ScreenType, ReferenceType } from '../../../entities/Reference';
+import { ScreenType } from '../../../entities/Reference';
 
 import PosReference from './PosReference';
  
 export function SystemScreen({
+  system,
   screen,
-  renderSystem,
   rerenderSystem
 }: {
+  system: SystemType,
   screen: ScreenType,
-  renderSystem: SystemType,
   rerenderSystem: () => void,
 }) {
 
@@ -56,8 +56,14 @@ export function SystemScreen({
         onMouseDown={(e) => startDrag()} onMouseUp={() => stopDrag()}
       >
         <PosReference key={`Ref-${screen.id}`} screen={screen} />
-        {renderSystem.blocks.map((block) => (
-          <Block key={`block-${screen.id}-${block.id}`} block={block} renderSystem={renderSystem} rerenderSystem={rerenderSystem} screen={screen} />
+        {system.blocks.map((block) => (
+          <Block
+            key={`block-${screen.id}-${block.id}`}
+            system={system}
+            block={block}
+            rerenderSystem={rerenderSystem}
+            screen={screen}
+          />
         ))}
       </div>
     </div>

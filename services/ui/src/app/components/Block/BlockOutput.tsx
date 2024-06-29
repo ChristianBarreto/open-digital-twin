@@ -2,36 +2,6 @@ import { useState } from "react";
 
 export const BlockOutput = ({blockPosition, screen, output}) => {
 
-  const [isDrafting, setIsDrafting] = useState(false);
-  
-  // const callDraftArrow = (event) => {
-  //   event.preventDefault();
-  //   draftArrow({
-  //     left,
-  //     top,
-  //     event
-  //   })
-  // }
-
-  // const startComposeArrow = () => {
-  //   setIsDrafting(true);
-  //   addEventListener('mousemove', callDraftArrow);
-  //   addEventListener('mouseup', (() => stopComposeArrow(event)), {once: true});
-  // }
-
-  // const isInputBlock = (id: string): boolean => id.split('-')[0] === 'inputBlock';
-
-  // const inputBlockId = (id: string): string => id.split('-')[1];
-
-  // const stopComposeArrow = (event) => {
-  //   isInputBlock(event.target.id) && drawArrow({
-  //       outputBlockId: id,
-  //       inputBlockId: inputBlockId(event.target.id)
-  //     })
-  //   setIsDrafting(false);
-  //   removeEventListener('mousemove', callDraftArrow, false);
-  //   removeEventListener('mouseup', callDraftArrow, false);
-  // }
 
   return (
     <div
@@ -41,7 +11,7 @@ export const BlockOutput = ({blockPosition, screen, output}) => {
         top: `${screen.screenRefY + blockPosition.top +  (blockPosition.hSize * output.position) -8}px`,
         cursor: 'pointer',
       }}
-      // onMouseDown={(e) => startComposeArrow()}
+      onMouseDown={(e) => startComposeArrow()}
     >
       <p style={{
         position: 'inherit',

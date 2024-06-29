@@ -5,10 +5,10 @@ import { BlockOutput } from "./BlockOutput";
 import { Arrow } from "./Arrow";
 
 export const Block = ({
+  system,
   block,
   rerenderSystem,
   screen,
-  renderSystem,
 }) => {
   const [showMenu, setShowMenu] = useState(false)
 
@@ -18,11 +18,11 @@ export const Block = ({
       {showMenu  && (
         <BlockMenu
           key={`menu-${screen.id}-${block.id}`}
+          system={system}
           block={block}
           setShowMenu={setShowMenu}
           rerenderSystem={rerenderSystem}
           screen={screen}
-          renderSystem={renderSystem}
         />)
       }
 

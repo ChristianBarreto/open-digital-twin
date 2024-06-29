@@ -3,18 +3,23 @@ import Edit from '../Icons/Edit';
 import Close from '../Icons/Close';
 
 export const BlockMenu = ({
-  block,
-  setShowMenu,
-  rerenderSystem,
+  system,
   screen,
-  renderSystem,
+  block,
+  rerenderSystem,
+  setShowMenu
 }) => {
+  
 
   const dragBlock = (event) => {
     event.preventDefault();
+    
     const deltaX = event.clientX - screen.left - screen.screenRefX - 35;
     const deltaY = event.clientY - screen.top - screen.screenRefY - 127;
+    
     block.position.editBlockPosition(deltaX, deltaY);
+    system.updateBlockArrows(block.id);
+    
     rerenderSystem();
   }
 

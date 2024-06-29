@@ -38,13 +38,16 @@ export function SystemScreen({
     removeEventListener('mouseup', myOnMouseUp, false);
   }
 
+  const bgScreenRefX = screen.screenRefX >= 0 ? Math.abs((((screen.screenRefX) / 32) %1) *32) : 32 - Math.abs((((screen.screenRefX) / 32) %1) *32);
+  const bgScreenRefY = screen.screenRefY >= 0 ? Math.abs((((screen.screenRefY) / 32) %1) *32) : 32 - Math.abs((((screen.screenRefY) / 32) %1) *32);
+
   return (
     <div>
-      <canvas id="canvas" width="150" height="150"></canvas>
       <div
         id={screen.id}
         className="border rounded-none bg-slate-50"
         style={{
+          backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(15 23 42 / 0.08)'%3e%3cpath d='M0,${bgScreenRefY} L32,${bgScreenRefY}'/%3e%3cpath d='M${bgScreenRefX} .5V32'/%3e%3c/svg%3e")`,
           position: 'absolute',
           overflow: 'hidden',
           cursor: 'grab',

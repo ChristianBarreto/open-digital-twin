@@ -1,3 +1,5 @@
+import { Coord } from "../Block/Coord";
+
 interface LineCoord {
   x1: number,
   y1: number,
@@ -20,15 +22,20 @@ export function Line({coord, screen}: {coord: LineCoord}) {
   return (
     <>
       {!notLine && (
-        <div style={{
-          position: 'absolute',
-          borderTop: '1px solid gray',
-          borderLeft: '1px solid gray',
-          left: `${screen.screenRefX + coord.x1}px`,
-          top: `${screen.screenRefY + coord.y1}px`,
-          width: `${width}px`,
-          height: `${heigth}px`,
-        }}></div>
+        <>
+          <div style={{
+              position: 'absolute',
+              borderTop: '1px solid gray',
+              borderLeft: '1px solid gray',
+              left: `${screen.screenRefX + coord.x1}px`,
+              top: `${screen.screenRefY + coord.y1}px`,
+              width: `${width}px`,
+              height: `${heigth}px`,
+            }}>
+          </div>
+          {/* <Coord screen={screen} coord={coord}/> */}
+        </>
+ 
       )}
     </>
   )

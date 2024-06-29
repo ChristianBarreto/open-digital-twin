@@ -7,6 +7,7 @@ export const BlockMenu = ({
   setShowMenu,
   rerenderSystem,
   screen,
+  renderSystem,
 }) => {
 
   const dragBlock = (event) => {
@@ -19,12 +20,12 @@ export const BlockMenu = ({
 
   const startDrag = () => {
     addEventListener('mousemove', dragBlock, false)
-    addEventListener('mouseup', myOnMouseUp, false); 
+    addEventListener('mouseup', myOnMouseUp, false);
   }
 
   const stopDrag = () => {
     removeEventListener('mousemove', dragBlock, false);
-    addEventListener('mouseup', myOnMouseUp, false); 
+    addEventListener('mouseup', myOnMouseUp, false);
   }
 
   const myOnMouseUp = () => {

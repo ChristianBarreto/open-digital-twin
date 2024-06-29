@@ -1,47 +1,63 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { BlockMenu } from "./BlockMenu";
 import { BlockInput } from "./BlockInput";
 import { BlockOutput } from "./BlockOutput";
-import { Line } from "../Arrow/Line";
-import { Arrow, Line as LineC } from "@/entities/Arrows";
-
+import { Arrow } from "./Arrow";
 
 export const Block = ({
   block,
   rerenderSystem,
   screen,
+  renderSystem,
 }) => {
   const [showMenu, setShowMenu] = useState(false)
 
   return (
     <>
+
       {showMenu  && (
         <BlockMenu
-          key={`menu-${block.id}`}
+          key={`menu-${screen.id}-${block.id}`}
           block={block}
           setShowMenu={setShowMenu}
           rerenderSystem={rerenderSystem}
-          screen={screen} 
+          screen={screen}
+          renderSystem={renderSystem}
         />)
       }
-      {block.state.inputs.map((input) => (
-        <>
-          <BlockInput key={`input${block.id}`} blockPosition={block.position} screen={screen} input={input} />
-          {input.arrow.lines.map((line, index) => (
-            <Line key={index} screen={screen} coord={line} />
-          ))}
-          
-        </>
+
+      {block.state.inputs?.map((input) => (
+        <Fragment key={`inputarrow-${screen.id}-${block.id}-${input.id}`} >
+          <BlockInput
+            key={`input-${screen.id}-${block.id}-${input.id}`}
+            blockPosition={block.position}
+            screen={screen}
+            input={input}
+          />
+          {input.arrow && (
+            <Arrow
+              key={`arrow-${screen.id}-${block.id}-${input.id}`}
+              arrow={input.arrow}
+              screen={screen} 
+            />
+          )}
+        </Fragment>
       ))}
+
       {block.state.outputs.map((output) => (
-        <BlockOutput  key={`output-${block.id}`} blockPosition={block.position} screen={screen} output={output} />
+        <BlockOutput
+          key={`output-${screen.id}-${block.id}-${output.id}`}
+          blockPosition={block.position}
+          screen={screen}
+          output={output}
+        />
       ))}
+
       <div
         onMouseOver={() => setShowMenu(true)}
         onMouseOut={() => setShowMenu(false)}
       >
         <div
-          key={`block-${block.id}`}
           style={{
             border: "1px solid gray",
             borderRadius: "5px",
@@ -62,6 +78,7 @@ export const Block = ({
           {(block.type == 'indicator') && <Indicator key={block.id} block={block} />} */}
         </div>
       </div>
+
     </>
   )
 }

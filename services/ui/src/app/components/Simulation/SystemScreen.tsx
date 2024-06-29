@@ -37,8 +37,6 @@ export function SystemScreen({
     removeEventListener('mousemove', dragScreen, false);
     removeEventListener('mouseup', myOnMouseUp, false);
   }
-  
-
 
   return (
     <div>
@@ -57,9 +55,9 @@ export function SystemScreen({
         }}
         onMouseDown={(e) => startDrag()} onMouseUp={() => stopDrag()}
       >
-        <PosReference screen={screen} />
+        <PosReference key={`Ref-${screen.id}`} screen={screen} />
         {renderSystem.blocks.map((block) => (
-          <Block key={block.id} block={block} rerenderSystem={rerenderSystem} screen={screen} />
+          <Block key={`block-${screen.id}-${block.id}`} block={block} renderSystem={renderSystem} rerenderSystem={rerenderSystem} screen={screen} />
         ))}
       </div>
     </div>

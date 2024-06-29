@@ -17,13 +17,16 @@ reference.createTwoScreens();
 
 system.newBlock();
 system.changeBlockTypeToStep(0);
+system.blocks[0].state.addOutput();
 system.blocks[0].position.editBlockPosition(10, 100);
 
 system.newBlock();
+
 system.changeBlockTypeToIndicator(1);
+system.blocks[1].state.addInput();
 system.blocks[1].position.editBlockPosition(200, 200);
 
-system.setBlockInput(1, 0, 0, 0)
+// system.setBlockInput(1, 0, 0, 0)
 
 
 export default function Home() {
@@ -33,6 +36,10 @@ export default function Home() {
   const [clock, setClock] = useState(0);
   const [timer, setTimer] = useState(0);
   const [sample, ] = useState(100);
+
+  system.setBlockInput(1, 1, 0, 0);
+  // TODO: when testing (1, 1, 0, 1) an error happens.
+  // TODO: when testing (1, 1, 0, 0) the arrow location is not good
 
   useEffect(() => {
     setRenderSystem(cloneStruct(system));
@@ -92,7 +99,7 @@ export default function Home() {
         >
           {reference.screens.map((screen) => (
             <SystemScreen
-              key={screen.id}
+              key={`system-screen-${screen.id}`}
               screen={screen}
               renderSystem={renderSystem}
               rerenderSystem={rerenderSystem}

@@ -24,6 +24,10 @@ class Input {
     this.id = id;
   };
 
+  connectThisInputToOutput(outputBlockId: number, outputId: number) {
+    
+  }
+
 };
 
 class Output {
@@ -89,5 +93,5 @@ export class BlockState {
   outputValueById(outputId: number): number {
     const outputIndex = this.outputs.findIndex((o) => o.id === outputId)
     return this.outputs[outputIndex].value;
-  }
+  };
 };

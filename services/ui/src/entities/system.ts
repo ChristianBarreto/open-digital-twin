@@ -55,7 +55,7 @@ export class System {
     const outputBlockInputIndex = this.findBlockOutputIndexByIds(outputBlockId, outputId);
 
 
-    if(currentBlockInputIndex !== undefined) {
+    if(currentBlockInputIndex && outputBlockInputIndex !== undefined) {
       this.blocks[currentBlockIndex].state
         .inputs[currentBlockInputIndex].reference = {outputBlockId: outputBlockId, outputId: outputId};
 
@@ -63,13 +63,12 @@ export class System {
       const x1 = this.blocks[outputBlockIndex].position.left + this.blocks[outputBlockIndex].position.hSize;
       const y1 = this.blocks[outputBlockIndex].position.top + (this.blocks[outputBlockIndex].position.hSize * this.blocks[outputBlockIndex].state.outputs[outputBlockInputIndex].position);
       const x2 = this.blocks[currentBlockIndex].position.left;
-      const y2 = this.blocks[currentBlockIndex].position.top +(this.blocks[currentBlockIndex].position.hSize * this.blocks[currentBlockInputIndex].state.outputs[outputBlockInputIndex].position);
+      const y2 = this.blocks[currentBlockIndex].position.top + this.blocks[currentBlockIndex].position.hSize * this.blocks[currentBlockInputIndex].state.outputs[outputBlockInputIndex].position;
+      // TODO: can be improved
       
       this.blocks[currentBlockIndex].state
-        .inputs[currentBlockInputIndex].arrow = new Arrow(1, x1, y1, 3, x2, y2)
-    
+        .inputs[currentBlockInputIndex].arrow = new Arrow(1, x1, y1, 3, x2, y2);
     }
-    // TODO: After setting input, link blocks with arrows;
   };
 
   getInputValue(currentBlockId: number, inputId: number): number | undefined {

@@ -7,8 +7,8 @@ export const BlockOutput = ({blockPosition, screen, output}) => {
     <div
       style={{
         position: 'absolute',
-        left: `${screen.screenRefX + blockPosition.left + 65}px`,
-        top: `${screen.screenRefY + blockPosition.top +  (blockPosition.hSize * output.position) -8}px`,
+        left: `${screen.screenRefX + blockPosition.left + blockPosition.hSize -5}px`,
+        top: `${screen.screenRefY + blockPosition.top +  (blockPosition.vSize * output.position) -8}px`,
         cursor: 'pointer',
       }}
       onMouseDown={(e) => startComposeArrow()}

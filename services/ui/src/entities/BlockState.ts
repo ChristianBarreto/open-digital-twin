@@ -45,12 +45,12 @@ class Output {
   constructor(id: number) {
     this.id = id;
   };
-
 };
 
 export class BlockState {
   inputs: Input[] = [];
   outputs: Output[] = [];
+  tempValues: number[] = [];
 
   organizeIos() {
     if (this.inputs.length){

@@ -16,6 +16,10 @@ export class BlockData {
     this.type = 'indicator';
   };
 
+  changeTypeToChart() {
+    this.type = 'chart';
+  };
+
   changeTypeToStep() {
     this.type = 'step';
     this.initialValue = 0;

@@ -74,7 +74,7 @@ export class System {
       const x2 = (this.blocks[currentBlockIndex].position.left);
 
       const y2 = (this.blocks[currentBlockIndex].position.top
-        + (this.blocks[currentBlockIndex].position.hSize * this.blocks[currentBlockIndex].state.inputs[currentBlockInputIndex].position));
+        + (this.blocks[currentBlockIndex].position.vSize * this.blocks[currentBlockIndex].state.inputs[currentBlockInputIndex].position));
 
 
       return [side1, x1, y1, side2, x2, y2]
@@ -114,6 +114,8 @@ export class System {
       console.error(`Was not possible to assing this input to an output.
         > Block id ${currentBlockId} input id ${inputId} with block id ${outputBlockId} output id ${outputId}`)
     }
+
+    //TODO: If an output does not exist, if should not be done.
   };
 
   updateBlockArrows(currentBlockId: number) {
@@ -170,7 +172,15 @@ export class System {
     this.blocks[blockIndex].data.changeTypeToIndicator();
     this.blocks[blockIndex].state.deleteAllIos();
     this.blocks[blockIndex].state.addInput();
-    this.blocks[blockIndex].state.addOutput();
+  };
+
+  changeBlockTypeToChart(id: number) {
+    const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    this.blocks[blockIndex].data.changeTypeToChart();
+    this.blocks[blockIndex].state.deleteAllIos();
+    this.blocks[blockIndex].position.editBlockVSize(200);
+    this.blocks[blockIndex].position.editBlockHSize(300);
+    this.blocks[blockIndex].state.addInput();
   };
 
   changeBlockTypeToStep(id: number) {

@@ -3,7 +3,6 @@ import { Coord } from "./Coord"
 
 export const BlockInput = ({blockPosition, screen, input}) => {
   
-
   return (
     <>
       <div
@@ -13,7 +12,7 @@ export const BlockInput = ({blockPosition, screen, input}) => {
             screen.screenRefX + blockPosition.left -12
           }px`,
           top: `${
-            screen.screenRefY + blockPosition.top + (blockPosition.hSize * input.position) -8
+            screen.screenRefY + blockPosition.top + (blockPosition.vSize * input.position) -8
           }px`,
         }}
       >

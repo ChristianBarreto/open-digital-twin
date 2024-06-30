@@ -16,17 +16,20 @@ reference.createTwoScreens();
 
 system.newBlock();
 system.changeBlockTypeToStep(0);
-system.blocks[0].state.addOutput();
-system.blocks[0].position.editBlockPosition(10, 100);
+system.blocks[0].position.editBlockPosition(10, 200);
 
 system.newBlock();
 
 system.changeBlockTypeToIndicator(1);
-system.blocks[1].state.addInput();
-system.blocks[1].position.editBlockPosition(200, 200);
+system.blocks[1].position.editBlockPosition(150, 350);
+
+system.newBlock();
+
+system.changeBlockTypeToChart(2);
+system.blocks[2].position.editBlockPosition(300, 135);
 
 system.setBlockInput(1, 0, 0, 0);
-system.setBlockInput(1, 1, 0, 1);
+system.setBlockInput(2, 0, 0, 0);
 
 
 export default function Home() {
@@ -43,6 +46,7 @@ export default function Home() {
   }, []);
 
   const rerenderSystem = () => {
+    console.log(system.blocks[2].state.tempValues);
     setRenderSystem(cloneStruct(system));
   };
 

@@ -14,7 +14,6 @@ export const Block = ({
 
   return (
     <>
-
       {showMenu  && (
         <BlockMenu
           key={`menu-${screen.id}-${block.id}`}

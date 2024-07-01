@@ -3,6 +3,7 @@ import { BlockMenu } from "./BlockMenu";
 import { BlockInput } from "./BlockInput";
 import { BlockOutput } from "./BlockOutput";
 import { Arrow } from "./Arrow";
+import { Chart } from "./Chart";
 
 export const Block = ({
   system,
@@ -71,13 +72,27 @@ export const Block = ({
             cursor: 'auto',
           }}
         >
-          <p>{block.data.type}</p>
-          {/* {(block.type == 'empty') && <Empty key={id} timer={timer} block={block} />}
-          {(block.type == 'step') && <Step key={id} timer={timer} block={block} />}
-          {(block.type == 'indicator') && <Indicator key={block.id} block={block} />} */}
+          {block.data.type === "chart" ? (
+            <>
+              <Chart chartSetup={{
+                  width: block.position.hSize,
+                  height: block.position.vSize,
+                  xMin: 0,
+                  xMax: 10,
+                  yMin: -2,
+                  yMax: 2,
+                }}
+                histValues={block.state.histValues}
+              />
+            </>
+          ):(
+            <>
+              <p>{block.data.type}</p>
+              <h3>{block.state.value}</h3>
+            </>
+          )}
         </div>
       </div>
-
     </>
   )
 }

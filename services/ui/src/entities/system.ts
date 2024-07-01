@@ -43,6 +43,16 @@ export class System {
     return this.blocks.find((b) => b.id === blockId);
   };
   
+  setBlockValue(blockId: number, value: number) {
+    const blockIndex = this.findBlockIndexById(blockId);
+    this.blocks[blockIndex].state.value = value;
+  };
+
+  setBlockHistValue(blockId: number, value: number, time) {
+    const blockIndex = this.findBlockIndexById(blockId);
+    this.blocks[blockIndex].state.histValues.push({x: time, y: value});
+  };
+
   setBlockOutput(blockId: number, outputIndex: number,  value: number) {
     const blockIndex = this.findBlockIndexById(blockId);
     this.blocks[blockIndex].state.outputs[outputIndex].value = value;
@@ -186,6 +196,13 @@ export class System {
   changeBlockTypeToStep(id: number) {
     const blockIndex = this.blocks.findIndex((b) => b.id === id);
     this.blocks[blockIndex].data.changeTypeToStep();
+    this.blocks[blockIndex].state.deleteAllIos();
+    this.blocks[blockIndex].state.addOutput();
+  };
+
+  changeBlockTypeToSin(id: number) {
+    const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    this.blocks[blockIndex].data.changeTypeToSin();
     this.blocks[blockIndex].state.deleteAllIos();
     this.blocks[blockIndex].state.addOutput();
   };

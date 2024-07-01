@@ -12,6 +12,11 @@ type OutputReference = {
   inputId: number | undefined;
 }
 
+export type HistValue = {
+  x: number,
+  y: number,
+}
+
 class Input {
   position: number = 0;
   side: BlockSide = 3;
@@ -50,7 +55,8 @@ class Output {
 export class BlockState {
   inputs: Input[] = [];
   outputs: Output[] = [];
-  tempValues: number[] = [];
+  value: number = 0;
+  histValues: HistValue[] = [];
 
   organizeIos() {
     if (this.inputs.length){

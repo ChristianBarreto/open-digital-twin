@@ -15,7 +15,8 @@ const getMessurements = (id: string) => document.getElementById(id)?.getBounding
 reference.createTwoScreens();
 
 system.newBlock();
-system.changeBlockTypeToStep(0);
+// system.changeBlockTypeToStep(0);
+system.changeBlockTypeToSin(0);
 system.blocks[0].position.editBlockPosition(10, 200);
 
 system.newBlock();
@@ -23,14 +24,13 @@ system.newBlock();
 system.changeBlockTypeToIndicator(1);
 system.blocks[1].position.editBlockPosition(150, 350);
 
-system.newBlock();
+system.setBlockInput(1, 0, 0, 0);
 
+system.newBlock();
 system.changeBlockTypeToChart(2);
 system.blocks[2].position.editBlockPosition(300, 135);
 
-system.setBlockInput(1, 0, 0, 0);
 system.setBlockInput(2, 0, 0, 0);
-
 
 export default function Home() {
   const cloneStruct = (struct: System) => Object.assign(Object.create(Object.getPrototypeOf(struct)), struct);
@@ -46,7 +46,6 @@ export default function Home() {
   }, []);
 
   const rerenderSystem = () => {
-    console.log(system.blocks[2].state.tempValues);
     setRenderSystem(cloneStruct(system));
   };
 
@@ -71,12 +70,23 @@ export default function Home() {
 
   const func = {
     "step": function (block: Block, _: number) {
-      const output = timer >= block.data.stepTime ? block.data.gain : block.data.initialValue;
-      system.setBlockOutput(block.id, 0, output);
+      const value = timer >= block.data.stepTime ? block.data.gain : block.data.initialValue;
+      system.setBlockOutput(block.id, 0, value.toFixed(2));
+      system.setBlockValue(block.id, value.toFixed(2));
+
+    },
+    "sin": function (block: Block, _: number) {
+      const value = Math.sin(timer * block.data.thetaGain) * block.data.gain;
+      system.setBlockOutput(block.id, 0, value.toFixed(2));
+      system.setBlockValue(block.id, value.toFixed(2));
     },
     "indicator": function (block: Block, _: number) {
+      const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);
+      system.setBlockValue(block.id, inputValue);
+    },
+    "chart": function (block: Block, _: number) {
       const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);     
-      system.setBlockOutput(inputValue, 0, inputValue);
+      system.setBlockHistValue(block.id, inputValue, timer);
     },
   };
 

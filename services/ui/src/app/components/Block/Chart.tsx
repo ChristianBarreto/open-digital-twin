@@ -2,7 +2,7 @@ import { HistValue } from "@/entities/BlockState";
 
 type HistValues = HistValue[];
 
-export function Chart({histValues = [], chartSetup}: {histValues: HistValues}) {
+export function Chart({histValues = [], chartSetup, screen}: {histValues: HistValues}) {
   const width = chartSetup.width - 22;
   const height = chartSetup.height - 22;
 
@@ -24,15 +24,10 @@ export function Chart({histValues = [], chartSetup}: {histValues: HistValues}) {
     y0: height * chartYMiddle ,
   };
 
-  // const chart = [];
 
-  // for (var i=-150; i<= 150; i++) {
-  //   chart.push({x: i, y: Math.sin(i/10) * 80})
-  // }
-
-  const transformChart = histValues.map(item => ({
-    x: ((item.x * chartXProp) + ref.x0),
-    y: (height - (item.y * chartYProp) - ref.y0)
+  const transformChart = histValues.map((item, index) => ({
+    x: ((index * 0.1 * chartXProp) + ref.x0).toFixed(2),
+    y: (height - (item.y * chartYProp) - ref.y0).toFixed(2)
   }))
 
   return(
@@ -54,9 +49,11 @@ export function Chart({histValues = [], chartSetup}: {histValues: HistValues}) {
         {transformChart.map((point, index) => {
           if (index === 0) return;
           return (
-            <g key={point.x} className="point">
-              <path d={`M ${transformChart[index-1].x} ${transformChart[index-1].y} L ${point.x} ${point.y}`} fill="transparent" stroke="blue"/>
-            </g>
+            <path
+              key={`${screen.id}-${transformChart[index-1].x}-${transformChart[index-1].y}-${point.x}-${point.y}-${index}`}
+              d={`M ${transformChart[index-1].x} ${transformChart[index-1].y} L ${point.x} ${point.y}`}
+              fill="transparent" stroke="blue"
+            />
           )
         })}
         

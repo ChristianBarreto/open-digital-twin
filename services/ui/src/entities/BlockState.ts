@@ -57,6 +57,7 @@ export class BlockState {
   outputs: Output[] = [];
   value: number = 0;
   histValues: HistValue[] = [];
+  histValuesMax: number = 450;
 
   organizeIos() {
     if (this.inputs.length){

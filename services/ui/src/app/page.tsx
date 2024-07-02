@@ -12,7 +12,7 @@ const system = new System();
 const reference = new Reference();
 
 const getMessurements = (id: string) => document.getElementById(id)?.getBoundingClientRect();
-reference.createTwoScreens();
+reference.createOneScreen();
 
 system.newBlock();
 // system.changeBlockTypeToStep(0);
@@ -38,7 +38,7 @@ export default function Home() {
   const [start, setStart] = useState(false);
   const [clock, setClock] = useState(0);
   const [timer, setTimer] = useState(0);
-  const [sample, ] = useState(100);
+  const [sample, ] = useState(0.1);
 
 
   useEffect(() => {
@@ -55,18 +55,18 @@ export default function Home() {
   };
 
   useEffect(() => {
-    reference.resize5050Vertical(getMessurements("container") as Messurements);
+    reference.resizeSingleScreen(getMessurements("container") as Messurements);
   }, []);
 
   useEffect(() => {
     if (start) {
       setTimeout(() => {
         setClock(clock + 1);
-        setTimer(clock / sample);
+        setTimer(clock * sample);
         calcResults();
-      }, 1000 / sample);
+      }, 1000 * sample);
     };
-  });
+  }, [start, clock]);
 
   const func = {
     "step": function (block: Block, _: number) {

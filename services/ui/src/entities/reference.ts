@@ -53,11 +53,26 @@ export interface ReferenceType {
 
 export class Reference {
   screens: Screen[] = [];
+  
+  createOneScreen() {
+    this.screens = [];
+    this.screens.push(new Screen('window1', 0, 0, 500, 500 ))
+  }
 
   createTwoScreens() {
     this.screens = [];
     this.screens.push(new Screen('window1', 0, 0, 500, 500 ))
     this.screens.push(new Screen('window2', 100, 100, 500, 500 ))
+
+  }
+
+  resizeSingleScreen(m: Messurements) {
+    if (m === undefined) return;
+    this.screens[0].left = 0;
+    this.screens[0].top = 0;
+    this.screens[0].width = m.width;
+    this.screens[0].height = (m.height - m.top);
+
 
   }
 

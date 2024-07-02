@@ -51,6 +51,9 @@ export class System {
   setBlockHistValue(blockId: number, value: number, time) {
     const blockIndex = this.findBlockIndexById(blockId);
     this.blocks[blockIndex].state.histValues.push({x: time, y: value});
+    if (this.blocks[blockIndex].state.histValues.length > this.blocks[blockIndex].state.histValuesMax) {
+      this.blocks[blockIndex].state.histValues.shift();
+    }
   };
 
   setBlockOutput(blockId: number, outputIndex: number,  value: number) {

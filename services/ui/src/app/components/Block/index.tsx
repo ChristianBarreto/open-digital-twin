@@ -78,11 +78,13 @@ export const Block = ({
                   width: block.position.hSize,
                   height: block.position.vSize,
                   xMin: 0,
-                  xMax: 10,
+                  xMax: 60,
                   yMin: -2,
                   yMax: 2,
+                  moveIn: 45,
                 }}
                 histValues={block.state.histValues}
+                screen={screen}
               />
             </>
           ):(

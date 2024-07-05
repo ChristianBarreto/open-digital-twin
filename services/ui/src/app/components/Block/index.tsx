@@ -4,6 +4,7 @@ import { BlockInput } from "./BlockInput";
 import { BlockOutput } from "./BlockOutput";
 import { Arrow } from "./Arrow";
 import { Chart } from "./Chart";
+import { Setpoint } from "./Setpoint";
 
 export const Block = ({
   system,
@@ -72,27 +73,60 @@ export const Block = ({
             cursor: 'auto',
           }}
         >
-          {block.data.type === "chart" ? (
-            <>
-              <Chart chartSetup={{
-                  width: block.position.hSize,
-                  height: block.position.vSize,
-                  xMin: 0,
-                  xMax: 60,
-                  yMin: -2,
-                  yMax: 2,
-                  moveIn: 45,
-                }}
-                histValues={block.state.histValues}
-                screen={screen}
-              />
-            </>
-          ):(
+
+          {block.data.type === "empty" && (
             <>
               <p>{block.data.type}</p>
               <h3>{block.state.value}</h3>
             </>
           )}
+
+          {block.data.type === "setpoint" && (
+            <Setpoint system={system} block={block} />
+          )}
+
+          {block.data.type === "constant" && (
+            <>
+              <p>{block.data.type}</p>
+              <h3>{block.state.value}</h3>
+            </>
+          )}
+
+          {block.data.type === "step" && (
+            <>
+              <p>{block.data.type}</p>
+              <h3>{block.state.value}</h3>
+            </>
+          )}
+
+          {block.data.type === "cos" && (
+            <>
+              <p>{block.data.type}</p>
+              <h3>{block.state.value}</h3>
+            </>
+          )}
+
+          {block.data.type === "indicator" && (
+            <>
+              <p>{block.data.type}</p>
+              <h3>{block.state.value}</h3>
+            </>
+          )}
+          {block.data.type === "chart" && (
+            <Chart chartSetup={{
+                width: block.position.hSize,
+                height: block.position.vSize,
+                xMin: 0,
+                xMax: 60,
+                yMin: -2,
+                yMax: 2,
+                moveIn: 45,
+              }}
+              histValues={block.state.histValues}
+              screen={screen}
+            />
+          )}
+
         </div>
       </div>
     </>

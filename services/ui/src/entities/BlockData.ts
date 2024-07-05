@@ -21,6 +21,17 @@ export class BlockData {
     this.type = 'chart';
   };
 
+  changeTypeToConstant() {
+    this.type = 'constant';
+    this.initialValue = 1;
+    this.gain = 1;
+  };
+
+  changeTypeToSetpoint() {
+    this.type = 'setpoint';
+    this.initialValue = 0;
+  };
+
   changeTypeToStep() {
     this.type = 'step';
     this.initialValue = 0;

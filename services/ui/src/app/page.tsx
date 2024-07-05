@@ -16,7 +16,9 @@ reference.createOneScreen();
 
 system.newBlock();
 // system.changeBlockTypeToStep(0);
-system.changeBlockTypeToSin(0);
+// system.changeBlockTypeToSin(0);
+// system.changeBlockTypeToConstant(0);
+system.changeBlockTypeToSetpoint(0);
 system.blocks[0].position.editBlockPosition(10, 200);
 
 system.newBlock();
@@ -73,7 +75,6 @@ export default function Home() {
       const value = timer >= block.data.stepTime ? block.data.gain : block.data.initialValue;
       system.setBlockOutput(block.id, 0, value.toFixed(2));
       system.setBlockValue(block.id, value.toFixed(2));
-
     },
     "sin": function (block: Block, _: number) {
       const value = Math.sin(timer * block.data.thetaGain) * block.data.gain;
@@ -82,11 +83,16 @@ export default function Home() {
     },
     "indicator": function (block: Block, _: number) {
       const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);
-      system.setBlockValue(block.id, inputValue);
+      (inputValue !== undefined) && system.setBlockValue(block.id, inputValue);
     },
     "chart": function (block: Block, _: number) {
-      const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);     
-      system.setBlockHistValue(block.id, inputValue, timer);
+      const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);
+      (inputValue !== undefined) && system.setBlockHistValue(block.id, inputValue, timer);
+    },
+    "constant": function (block: Block, _: number) {
+      const value = block.data.gain;
+      system.setBlockOutput(block.id, 0, value.toFixed(2));
+      system.setBlockValue(block.id, value.toFixed(2));
     },
   };
 

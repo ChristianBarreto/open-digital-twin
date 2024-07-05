@@ -72,8 +72,6 @@ export class Reference {
     this.screens[0].top = 0;
     this.screens[0].width = m.width;
     this.screens[0].height = (m.height - m.top);
-
-
   }
 
   resize5050Horizontal(m: Messurements) {

@@ -25,7 +25,7 @@ export function Chart({histValues = [], chartSetup, screen}: {histValues: HistVa
   };
 
 
-  const transformChart = histValues.map((item, index) => ({
+  const transformChart = histValues?.map((item, index) => ({
     x: ((index * 0.1 * chartXProp) + ref.x0).toFixed(2),
     y: (height - (item.y * chartYProp) - ref.y0).toFixed(2)
   }))
@@ -46,7 +46,7 @@ export function Chart({histValues = [], chartSetup, screen}: {histValues: HistVa
           <path d={`M ${ref.x0} ${ref.yMin} L ${ref.x0} ${ref.yMax}`} fill="transparent" stroke="gray"/>
         </g>
 
-        {transformChart.map((point, index) => {
+        {transformChart?.map((point, index) => {
           if (index === 0) return;
           return (
             <path

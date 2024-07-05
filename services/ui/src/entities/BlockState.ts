@@ -3,10 +3,12 @@ import { Arrow } from "./Arrows";
 type BlockSide =  1 | 2 | 3 | 4;
 type InputTypeType = 'input';
 type OutputTypeType = 'output';
+
 type InputReference = {
   outputBlockId: number | undefined;
   outputId: number | undefined;
 }
+
 type OutputReference = {
   inputBlockId: number | undefined;
   inputId: number | undefined;
@@ -32,7 +34,6 @@ class Input {
   constructor(id: number) {
     this.id = id;
   };
-
 };
 
 class Output {
@@ -42,10 +43,7 @@ class Output {
   rotation: number = 0;
   id: number = 0;
   value: number = 0;
-  reference: OutputReference = {
-    inputBlockId: undefined,
-    inputId: undefined
-  };
+  reference: OutputReference[] = [];
 
   constructor(id: number) {
     this.id = id;

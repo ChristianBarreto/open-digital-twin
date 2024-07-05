@@ -1,5 +1,6 @@
-const Close = () => (
+const Close = ({...props}) => (
   <svg
+    style={props.style}
     className="w-[13px] h-[13px] text-gray-800 dark:text-white inline m-1"
     fill="none"
     viewBox="0 0 14 14"

@@ -48,7 +48,7 @@ export class System {
     this.blocks[blockIndex].state.value = value;
   };
 
-  setBlockHistValue(blockId: number, value: number, time) {
+  setBlockHistValue(blockId: number, value: number, time: number) {
     const blockIndex = this.findBlockIndexById(blockId);
     this.blocks[blockIndex].state.histValues.push({x: time, y: value});
     if (this.blocks[blockIndex].state.histValues.length > this.blocks[blockIndex].state.histValuesMax) {
@@ -102,20 +102,20 @@ export class System {
     const currentBlockIndex = this.findBlockIndexById(currentBlockId);
     const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
     const outputBlockIndex = this.findBlockIndexById(outputBlockId);
-    const outputBlockInputIndex = this.findBlockOutputIndexByIds(outputBlockId, outputId);
+    const outputBlockOutputIndex = this.findBlockOutputIndexByIds(outputBlockId, outputId);
 
     if (
-      (currentBlockIndex !== undefined) &&
-      (currentBlockInputIndex !== undefined) &&
-      (outputBlockIndex !== undefined) &&
-      (outputBlockInputIndex !== undefined)
+      (currentBlockIndex !== -1) &&
+      (currentBlockInputIndex !== -1) &&
+      (outputBlockIndex !== -1) &&
+      (outputBlockOutputIndex !== -1)
     ) {
 
       this.blocks[currentBlockIndex].state
         .inputs[currentBlockInputIndex].reference = {outputBlockId: outputBlockId, outputId: outputId};
       
       this.blocks[outputBlockIndex].state
-        .outputs[outputBlockInputIndex].reference = {inputBlockId: currentBlockId, inputId: inputId};
+        .outputs[outputBlockOutputIndex].reference.push({inputBlockId: currentBlockId, inputId: inputId});
 
 
       const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(currentBlockId, inputId, outputBlockId, outputId);
@@ -147,15 +147,17 @@ export class System {
     })
 
     this.blocks[currentBlockIndex].state.outputs.forEach((output) => {
-      if (!output.reference.inputBlockId) return
+      output.reference.forEach((outputRef) => {
+        if (!outputRef.inputBlockId) return
 
-      const outputBlockIndex = this.findBlockIndexById(output.reference.inputBlockId);
-      const currentBlockOutputIndex = this.findBlockInputIndexByIds(output.reference.inputBlockId, output.reference.inputId);
+        const outputBlockIndex = this.findBlockIndexById(outputRef.inputBlockId);
+        const currentBlockOutputIndex = this.findBlockInputIndexByIds(outputRef.inputBlockId, outputRef.inputId);
+    
+        const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(outputRef.inputBlockId, outputRef.inputId, currentBlockId, output.id);
   
-      const [side1, x1, y1, side2, x2, y2] = this.defineArrowPosition(output.reference.inputBlockId, output.reference.inputId, currentBlockId, output.id);
-
-      this.blocks[outputBlockIndex].state
-        .inputs[currentBlockOutputIndex].arrow = new Arrow(side1, x1, y1, side2, x2, y2);
+        this.blocks[outputBlockIndex].state
+          .inputs[currentBlockOutputIndex].arrow = new Arrow(side1, x1, y1, side2, x2, y2);
+      })
     })
 
   }
@@ -196,9 +198,23 @@ export class System {
     this.blocks[blockIndex].state.addInput();
   };
 
+  changeBlockTypeToConstant(id: number) {
+    const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    this.blocks[blockIndex].data.changeTypeToConstant();
+    this.blocks[blockIndex].state.deleteAllIos();
+    this.blocks[blockIndex].state.addOutput();
+  };
+
   changeBlockTypeToStep(id: number) {
     const blockIndex = this.blocks.findIndex((b) => b.id === id);
     this.blocks[blockIndex].data.changeTypeToStep();
+    this.blocks[blockIndex].state.deleteAllIos();
+    this.blocks[blockIndex].state.addOutput();
+  };
+  
+  changeBlockTypeToSetpoint(id: number) {
+    const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    this.blocks[blockIndex].data.changeTypeToSetpoint();
     this.blocks[blockIndex].state.deleteAllIos();
     this.blocks[blockIndex].state.addOutput();
   };

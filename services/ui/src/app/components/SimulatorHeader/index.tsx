@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import Pen from "../Icons/Pen";
 import Plus from "../Icons/Plus";
+import { EditBlockModal } from "../Block/EditBlockModal";
 
 
 export default function SimulationHeader({handleNewBlock}) {
@@ -33,7 +34,6 @@ export default function SimulationHeader({handleNewBlock}) {
             New block
           </Button>
         </span>
-        
         
       </div>
     </div>

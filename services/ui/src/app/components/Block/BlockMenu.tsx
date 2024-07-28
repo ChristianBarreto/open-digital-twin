@@ -1,6 +1,8 @@
 import Drag from '../Icons/Drag';
 import Edit from '../Icons/Edit';
 import Close from '../Icons/Close';
+import { EditBlockModal } from './EditBlockModal';
+import { useState } from 'react';
 
 export const BlockMenu = ({
   system,
@@ -9,7 +11,9 @@ export const BlockMenu = ({
   rerenderSystem,
   setShowMenu
 }) => {
-  
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
 
   const dragBlock = (event) => {
     event.preventDefault();
@@ -38,6 +42,10 @@ export const BlockMenu = ({
     removeEventListener('mouseup', myOnMouseUp, false);
   }
 
+  const toggleEditBlockModal = () => {
+    setShowEditModal(!showEditModal)
+  }
+
 
   return (
     <div
@@ -54,8 +62,8 @@ export const BlockMenu = ({
       onMouseOver={() => setShowMenu(true)}
       onMouseOut={() => setShowMenu(false)}
     >
-      <span>
-        <Edit />  
+      <span onClick={() => setOpenModal(true)} data-dialog-target="dialog">
+        <Edit/>  
       </span>
 
       <span onMouseDown={(e) => startDrag()} onMouseUp={(e) => stopDrag()}>
@@ -65,6 +73,8 @@ export const BlockMenu = ({
       <span>
         <Close />
       </span>
+
+      {true && <EditBlockModal open={openModal} setOpen={setOpenModal} />}
 
     </div>
   )

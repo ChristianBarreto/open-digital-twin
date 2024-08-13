@@ -74,7 +74,15 @@ export const BlockMenu = ({
         <Close />
       </span>
 
-      {true && <EditBlockModal open={openModal} setOpen={setOpenModal} />}
+      {true && (
+        <EditBlockModal
+          open={openModal}
+          setOpen={setOpenModal}
+          system={system}
+          rerenderSystem={rerenderSystem}
+          block={block}
+        />
+      )}
 
     </div>
   )

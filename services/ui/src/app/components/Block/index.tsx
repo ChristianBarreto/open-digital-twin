@@ -99,7 +99,7 @@ export const Block = ({
             </>
           )}
 
-          {block.data.type === "cos" && (
+          {block.data.type === "sin" && (
             <>
               <p>{block.data.type}</p>
               <h3>{block.state.value}</h3>

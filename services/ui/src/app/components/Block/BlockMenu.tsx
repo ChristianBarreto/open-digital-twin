@@ -1,7 +1,7 @@
 import Drag from '../Icons/Drag';
 import Edit from '../Icons/Edit';
 import Close from '../Icons/Close';
-import { EditBlockModal } from './EditBlockModal';
+import { EditBlockModal } from '../EditBlockModal';
 import { useState } from 'react';
 
 export const BlockMenu = ({

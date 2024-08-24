@@ -1,7 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import Pen from "../Icons/Pen";
 import Plus from "../Icons/Plus";
-import { EditBlockModal } from "../Block/EditBlockModal";
+import { EditBlockModal } from "../EditBlockModal";
 
 
 export default function SimulationHeader({handleNewBlock}) {

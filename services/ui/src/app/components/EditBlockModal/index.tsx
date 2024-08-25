@@ -8,6 +8,7 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
+import BlockConfigurationForm from "./BlockConfigurationForm";
  
 export function EditBlockModal({
   open,
@@ -19,6 +20,7 @@ export function EditBlockModal({
   open: boolean,
   setOpen: (b: boolean) => void
 }) {
+  
   console.log(block)
   const [blockType, setBlockType] = useState(block.data.type);
   const toggleOpen = () => setOpen(!open);
@@ -60,7 +62,11 @@ export function EditBlockModal({
           <Option value="indicator">Indicator</Option>
           <Option value="chart">Chart</Option>
         </Select>
-        Block configuration
+
+        <h3>Block configuration</h3>
+        
+        <BlockConfigurationForm type={blockType} />
+
       </DialogBody>
       <DialogFooter>
         <Button

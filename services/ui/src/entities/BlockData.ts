@@ -7,7 +7,7 @@ export class BlockData {
   initialValue?: number = 0;
   stepTime?: number = 0;
   gain?: number = 0;
-  thetaGain?: number;
+  thetaGain?: number = 0;
 
   changeTypeToEmpty() {
     this.type = 'empty';

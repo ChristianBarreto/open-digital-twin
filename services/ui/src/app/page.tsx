@@ -20,6 +20,8 @@ system.newBlock();
 // system.changeBlockTypeToConstant(0);
 system.changeBlockTypeToSetpoint(0);
 system.blocks[0].position.editBlockPosition(10, 200);
+const blockData = system.blocks[0].data;
+system.changeBlockData(0, 'initialValue', 1)
 
 system.newBlock();
 

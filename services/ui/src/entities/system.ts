@@ -1,5 +1,6 @@
 import { Block } from './Block';
 import { Arrow } from './Arrows';
+import { BlockData } from './BlockData';
 
 export interface SystemType {
   id: number;
@@ -214,6 +215,7 @@ export class System {
   
   changeBlockTypeToSetpoint(id: number) {
     const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    console.log(this.blocks[blockIndex])
     this.blocks[blockIndex].data.changeTypeToSetpoint();
     this.blocks[blockIndex].state.deleteAllIos();
     this.blocks[blockIndex].state.addOutput();
@@ -226,5 +228,10 @@ export class System {
     this.blocks[blockIndex].state.addOutput();
   };
 
-  // Change block types and auto change IOs accordingly
+  // TODO: Change block types and auto change IOs accordingly
+
+  changeBlockData(id: number, dataName: keyof BlockData, data: number) {
+    const blockIndex = this.blocks.findIndex((b) => b.id === id);
+    this.blocks[blockIndex].data[dataName] = data;
+  }
 };

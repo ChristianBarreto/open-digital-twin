@@ -1,9 +1,11 @@
 import { Input } from "@material-tailwind/react";
 
-export default function BlockConfigurationForm ({type}) {
+export default function BlockConfigurationForm ({type, blockData, changeBlockData}) {
 
   return (
     <div>
+      <h3>Block configuration</h3>
+
       {(type === 'empty') && (
         <p>This is a empty block, choose a block type and adjust the settings.</p>
       )}
@@ -20,7 +22,7 @@ export default function BlockConfigurationForm ({type}) {
       )}
       {(type === 'setpoint') && (
         <div className="w-72">
-          <Input label="Start gain" />
+          <Input label="Initial value" name="initialValue" value={blockData.initialValue} onChange={changeBlockData}/>
         </div>
       )}
       {(type === 'sin') && (

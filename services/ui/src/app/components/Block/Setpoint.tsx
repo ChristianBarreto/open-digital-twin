@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Check } from "../Icons/Check";
 import Close from "../Icons/Close";
 import { classNames } from "@/app/helpers";
@@ -7,8 +7,13 @@ export function Setpoint({system, block}) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
-
   const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
+
+  useEffect(() => {
+    setValue(block.data.initialValue);
+    system.setBlockOutput(block.id, 0, Number(block.data.initialValue).toFixed(2));
+    system.setBlockValue(block.id, Number(block.data.initialValue).toFixed(2));
+  }, [])
 
   const handleEdit = () => {
     setError(false);

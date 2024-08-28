@@ -21,8 +21,8 @@ export function EditBlockModal({
   setOpen: (b: boolean) => void
 }) {
   
-  console.log(block)
   const [blockType, setBlockType] = useState(block.data.type);
+  const [blockData, setBlockData] = useState(block.data);
   const toggleOpen = () => setOpen(!open);
 
   const handleChangeBlockType = () => {
@@ -41,8 +41,34 @@ export function EditBlockModal({
     } else if (blockType === "chart") {
       system.changeBlockTypeToChart(block.id);
     }
+
     rerenderSystem();
     toggleOpen();
+  }
+
+  const changeBlockData = (e) => {
+    const cloneBlockData = {...blockData};
+    cloneBlockData[e.target.name] = e.target.value;
+    setBlockData(cloneBlockData);
+
+    if (blockType === "empty") {
+      
+    } else if (blockType === "constant") {
+      
+    } else if (blockType === "step") {
+      
+    } else if (blockType === "setpoint") {
+      system.setBlockOutput(block.id, 0, e.target.value);
+      system.setBlockValue(block.id, e.target.value);
+    } else if (blockType === "sin") {
+      
+    } else if (blockType === "indicator") {
+      
+    } else if (blockType === "chart") {
+      
+    }
+
+
   }
  
   return (
@@ -62,10 +88,8 @@ export function EditBlockModal({
           <Option value="indicator">Indicator</Option>
           <Option value="chart">Chart</Option>
         </Select>
-
-        <h3>Block configuration</h3>
-        
-        <BlockConfigurationForm type={blockType} />
+      
+        <BlockConfigurationForm type={blockType} blockData={blockData} changeBlockData={changeBlockData} />
 
       </DialogBody>
       <DialogFooter>

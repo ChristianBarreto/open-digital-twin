@@ -20,7 +20,7 @@ export function EditBlockModal({
   open: boolean,
   setOpen: (b: boolean) => void
 }) {
-  
+  console.log(block.data)
   const [blockType, setBlockType] = useState(block.data.type);
   const [blockData, setBlockData] = useState(block.data);
   const toggleOpen = () => setOpen(!open);
@@ -49,24 +49,28 @@ export function EditBlockModal({
   const changeBlockData = (e) => {
     const cloneBlockData = {...blockData};
     cloneBlockData[e.target.name] = e.target.value;
+    system.changeBlockData(block.id, 0, cloneBlockData);
+
     setBlockData(cloneBlockData);
 
-    if (blockType === "empty") {
+    // if (blockType === "empty") {
       
-    } else if (blockType === "constant") {
+    // } else if (blockType === "constant") {
+    //   system.setBlockOutput(block.id, 0, e.target.value);
+    //   system.setBlockValue(block.id, e.target.value);
+    // } else if (blockType === "step") {
       
-    } else if (blockType === "step") {
+    // } else if (blockType === "setpoint") {
+    //   system.setBlockOutput(block.id, 0, e.target.value);
+    //   system.setBlockValue(block.id, e.target.value);
+    // } else if (blockType === "sin") {
       
-    } else if (blockType === "setpoint") {
-      system.setBlockOutput(block.id, 0, e.target.value);
-      system.setBlockValue(block.id, e.target.value);
-    } else if (blockType === "sin") {
+    // } else if (blockType === "indicator") {
       
-    } else if (blockType === "indicator") {
+    // } else if (blockType === "chart") {
       
-    } else if (blockType === "chart") {
-      
-    }
+    // }
+    rerenderSystem();
 
 
   }

@@ -15,26 +15,36 @@ const getMessurements = (id: string) => document.getElementById(id)?.getBounding
 reference.createOneScreen();
 
 system.newBlock();
-// system.changeBlockTypeToStep(0);
-// system.changeBlockTypeToSin(0);
-// system.changeBlockTypeToConstant(0);
 system.changeBlockTypeToSetpoint(0);
-system.blocks[0].position.editBlockPosition(10, 200);
-const blockData = system.blocks[0].data;
+system.blocks[0].position.editBlockPosition(0, 100);
 system.changeBlockData(0, 'initialValue', 1)
 
 system.newBlock();
-
-system.changeBlockTypeToIndicator(1);
-system.blocks[1].position.editBlockPosition(150, 350);
-
+system.changeBlockTypeToChart(1);
+system.blocks[1].position.editBlockPosition(300, 35);
 system.setBlockInput(1, 0, 0, 0);
 
-system.newBlock();
-system.changeBlockTypeToChart(2);
-system.blocks[2].position.editBlockPosition(300, 135);
 
-system.setBlockInput(2, 0, 0, 0);
+system.newBlock();
+system.changeBlockTypeToSin(2);
+system.blocks[2].position.editBlockPosition(0, 250);
+
+system.newBlock();
+system.changeBlockTypeToIndicator(3);
+system.blocks[3].position.editBlockPosition(300, 250);
+system.setBlockInput(3, 0, 2, 0);
+
+system.newBlock();
+system.changeBlockTypeToConstant(4);
+system.blocks[4].position.editBlockPosition(0, 350);
+
+system.newBlock();
+system.changeBlockTypeToIndicator(5);
+system.blocks[5].position.editBlockPosition(300, 350);
+system.setBlockInput(5, 0, 4, 0);
+
+
+
 
 export default function Home() {
   const cloneStruct = (struct: System) => Object.assign(Object.create(Object.getPrototypeOf(struct)), struct);
@@ -84,8 +94,9 @@ export default function Home() {
       system.setBlockValue(block.id, value.toFixed(2));
     },
     "indicator": function (block: Block, _: number) {
+      console.log(block, block.state.inputs[0].id)
       const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);
-      (inputValue !== undefined) && system.setBlockValue(block.id, inputValue);
+      (inputValue !== undefined) && system.setBlockValue(block.id, inputValue); 
     },
     "chart": function (block: Block, _: number) {
       const inputValue = system.getInputValue(block.id, block.state.inputs[0].id);

@@ -101,6 +101,7 @@ export class BlockState {
 
   outputValueById(outputId: number): number {
     const outputIndex = this.outputs.findIndex((o) => o.id === outputId)
+    console.log("OUTPUT ID & INDEX", outputId, outputIndex)
     return this.outputs[outputIndex].value;
   };
 };

@@ -164,6 +164,7 @@ export class System {
   }
 
   getInputValue(currentBlockId: number, inputId: number): number | undefined {
+    console.log("getInputValue", currentBlockId, inputId)
     const currentBlock = this.findBlockById(currentBlockId);
     const currentBlockInputIndex = this.findBlockInputIndexByIds(currentBlockId, inputId);
     let outputBlockIndex = undefined;
@@ -171,7 +172,7 @@ export class System {
       outputBlockIndex = currentBlock?.state.inputs[currentBlockInputIndex].reference.outputBlockId;
     };
     if (outputBlockIndex !== undefined) {
-      return this.blocks[outputBlockIndex]?.state.outputValueById(outputBlockIndex);
+      return this.blocks[outputBlockIndex]?.state.outputValueById(currentBlock?.state.inputs[inputId].reference.outputId);
     };
     
     return undefined;

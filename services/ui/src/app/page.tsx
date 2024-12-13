@@ -30,7 +30,7 @@ system.changeBlockTypeToSin(2);
 system.blocks[2].position.editBlockPosition(0, 250);
 
 system.newBlock();
-system.changeBlockTypeToIndicator(3);
+system.changeBlockTypeToChart(3);
 system.blocks[3].position.editBlockPosition(300, 250);
 system.setBlockInput(3, 0, 2, 0);
 

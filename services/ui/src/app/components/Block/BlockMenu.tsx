@@ -19,8 +19,8 @@ export const BlockMenu = ({
     event.preventDefault();
     
     const deltaX = event.clientX - screen.left - screen.screenRefX - 35;
-    const deltaY = event.clientY - screen.top - screen.screenRefY - 127;
-    
+    const deltaY = event.clientY - screen.top - screen.screenRefY + 10;
+
     block.position.editBlockPosition(deltaX, deltaY);
     system.updateBlockArrows(block.id);
     
